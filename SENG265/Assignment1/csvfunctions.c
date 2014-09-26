@@ -186,12 +186,12 @@ int SS_FindRow(SPREADSHEET *ss, int colNum, char *text, int startNum) {
 
     if (colNum < 0)
     {
-    	printf("-- INVALID INPUT: Negative row number \n");
+    	printf("-- INVALID INPUT: Negative column number \n");
     }
 
     if (colNum >= ss->numCols)
     {
-    	printf("-- INVALID INPUT: Specified row is out of range \n");
+    	printf("-- INVALID INPUT: Specified column is out of range \n");
     }
 
     int i;
