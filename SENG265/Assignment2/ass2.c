@@ -44,7 +44,6 @@ static int getColNumberArg(void);
 // subcommands to be entered.
 int main( int argc, char *argv[] ) {
     int i;
-    char *fileName = NULL;
     int debug = 0;
 
     programName = argv[0];
@@ -328,4 +327,5 @@ static int getColNumberArg(void) {
         return -1;
     }
     colNum = convertColId(col);
+    return colNum;;
 }
