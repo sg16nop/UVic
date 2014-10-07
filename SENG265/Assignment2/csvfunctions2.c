@@ -1,8 +1,8 @@
 /* File: csvfunctions2.c
 
-   ==> THIS IS THE FILE YOU CHANGE <==
+   Name: Douglas Wong
+   Student Number: V00787654
 
-   IMPORTANT:  Replace the line above with your student number and your name.
 */
 
 #include <stdio.h>
@@ -220,7 +220,42 @@ int SS_FindRow(SPREADSHEET *ss, int colNum, char *text, int startNum) {
     if (debug)
         fprintf(stderr, "DEBUG: Call to SS_FindRow(--,%d,%s,%d)\n",
             colNum, text, startNum);
-    // REIMPLEMENT ME
+	
+	
+	// Error messages + handling
+	if (startNum < 0) {
+		printf("-- specified starting row(%d) is invalid\n", startNum);
+		return -1;
+	}
+	if (startNum+1 > ss->numRows) {
+		printf("-- specified starting row(%d) is out of range\n", startNum);
+		return -1;
+	}
+	if (colNum+1 > ss->numCols) {
+		printf("-- specified column(%d) out of range\n", colNum);
+		return -1;
+	}
+	
+	
+	
+	struct OneRow *rowIt = ss->firstRow;					// initialize iterator to head
+	int i;
+	for (i=0; i < startNum ; i++) {							// this loop move iterator to starting row
+		rowIt = rowIt->nextRow;
+	}
+	
+		
+	for (i=startNum; i < ss->numRows; i++) {				// this loop traverse through rows
+		printf(rowIt->row[colNum]);
+		printf("\n");
+		
+		if (strcmp(rowIt->row[colNum],text) == 0)	{		// directly check specified column
+			printf("match !!i is %d\n", i);
+			return i;
+		}
+		rowIt = rowIt->nextRow;
+	}
+	
     return -1;
 }
 
