@@ -175,7 +175,10 @@ static int extractItems(char *line, char *row[]) {
 void SS_PrintStats(SPREADSHEET *ss) {
     if (debug)
         fprintf(stderr, "DEBUG: Call to SS_PrintStats(--)\n");
-	// IMPLEMENT ME
+	
+	printf("File: %s\n", ss->fileName);
+	printf("Rows: %d\n",ss->numRows);
+	printf("Columns: %d\n",ss->numCols);
 }
 
 
@@ -293,8 +296,18 @@ void SS_PrintRow(SPREADSHEET *ss, int rowNum) {
 double SS_ColumnSum(SPREADSHEET *ss, int colNum) {
     if (debug)
         fprintf(stderr, "DEBUG: Call to SS_ColumnSum(--,%d)\n", colNum);
-    double sum = 0.0;
-    // REIMPLEMENT ME
+    
+	if (colNum+1 > ss->numCols) {
+		printf("-- specified column(%d) out of range\n", colNum);
+		return -1;
+	}
+	double sum = 0.0;
+    struct OneRow *rowIt = ss->firstRow;
+	int i;
+	for (i=0; i<ss->numRows; i++) {
+		sum =+ atof(rowIt->row[colNum]);
+		rowIt = rowIt->nextRow;
+	}
     return sum;
 }
 
