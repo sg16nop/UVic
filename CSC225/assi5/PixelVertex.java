@@ -6,7 +6,6 @@
    B. Bird - 04/08/2015
 */
 
-import java.util.List;
 import java.util.LinkedList;
 
 public class PixelVertex{
@@ -14,7 +13,7 @@ public class PixelVertex{
     private int x;
     private int y;
     private int degree;
-    private List<PixelVertex> neighbours;
+    private LinkedList<PixelVertex> neighbours;
     
     
     public PixelVertex(int x, int y){
