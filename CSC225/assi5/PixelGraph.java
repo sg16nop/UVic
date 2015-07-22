@@ -8,6 +8,10 @@
 import java.awt.Color;
 
 public class PixelGraph{
+    
+    private PixelVertex[][] graph;
+    private int height;
+    private int width;
 
 	/* PixelGraph constructor
 	   Given a 2d array of colour values (where element [x][y] is the colour 
@@ -15,7 +19,38 @@ public class PixelGraph{
 	   structure to contain the pixel graph of the image. 
 	*/
 	public PixelGraph(Color[][] imagePixels){
-		/* Your code here */
+		this.width = imagePixels.length;
+        this.height = imagePixels[0].length;
+        // this is assuming the canvas is rectangular
+        
+        this.graph = new PixelVertex[this.width][this.height];
+        
+        for (int i = 0; i < this.width; i++){
+            for (int j = 0; j < this.height; j++){
+                
+                graph[i][j] = new PixelVertex(i,j);
+                
+                if (i > 0){
+                    if (imagePixels[i][j].equals(imagePixels[i-1][j])){
+                        // look back in the x-axis to see if equal
+                        graph[i][j].addNeighbour(graph[i-1][j]);
+                        graph[i-1][j].addNeighbour(graph[i][j]);
+                    }
+                }
+                
+                if (j>0){
+                    if (imagePixels[i][j].equals(imagePixels[i][j-1])){
+                        // look back in the y-axis to see if equal
+                        graph[i][j].addNeighbour(graph[i][j-1]);
+                        graph[i][j-1].addNeighbour(graph[i][j]);
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        
 	}
 	
 	/* getPixelVertex(x,y)
@@ -26,8 +61,7 @@ public class PixelGraph{
 	   image).
 	*/
 	public PixelVertex getPixelVertex(int x, int y){
-		/* Your code here */
-		return null;
+		return graph[x][y];
 	}
 	
 	/* getWidth()
@@ -35,8 +69,7 @@ public class PixelGraph{
 	   object.
 	*/
 	public int getWidth(){
-		/* Your code here */
-		return 0;
+		return this.width;
 	}
 	
 	/* getHeight()
@@ -44,8 +77,7 @@ public class PixelGraph{
 	   object.
 	*/
 	public int getHeight(){
-		/* Your code here */
-		return 0;
+		return this.height;
 	}
 	
 }

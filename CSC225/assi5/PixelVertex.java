@@ -7,41 +7,54 @@
 */
 
 import java.util.List;
+import java.util.LinkedList;
 
 public class PixelVertex{
-
-	/* Add a constructor here (if necessary) */
+    
+    private int x;
+    private int y;
+    private int degree;
+    private List<PixelVertex> neighbours;
+    
+    
+    public PixelVertex(int x, int y){
+        this.degree = 0;
+        this.neighbours = new LinkedList<PixelVertex>();
+        this.x = x;
+        this.y = y;
+    }
 	
 	
 	/* getX()
 	   Return the x-coordinate of the pixel corresponding to this vertex.
 	*/
 	public int getX(){
-		/* Your code here */
-		return -1;
+		return this.x;
 	}
 	
 	/* getY()
 	   Return the y-coordinate of the pixel corresponding to this vertex.
 	*/
 	public int getY(){
-		/* Your code here */
-		return -1;
+		return this.y;
 	}
 	
 	/* getNeighbours()
 	   Return an array containing references to all neighbours of this vertex.
 	*/
 	public PixelVertex[] getNeighbours(){
-		/* Your code here */
-		return null;
+        if (this.degree == 0)
+            return null;
+		PixelVertex[] neighbourArray = this.neighbours.toArray(new PixelVertex[this.degree]);
+		return neighbourArray;
 	}
 	
 	/* addNeighbour(newNeighbour)
 	   Add the provided vertex as a neighbour of this vertex.
 	*/
 	public void addNeighbour(PixelVertex newNeighbour){
-		/* Your code here */
+		this.neighbours.add(newNeighbour);
+        this.degree++;
 	}
 	
 	/* removeNeighbour(neighbour)
@@ -49,15 +62,15 @@ public class PixelVertex{
 	   remove it from the list of neighbours.
 	*/
 	public void removeNeighbour(PixelVertex neighbour){
-		/* Your code here */
+		this.neighbours.remove(neighbour);
+        this.degree--;
 	}
 	
 	/* getDegree()
 	   Return the degree of this vertex.
 	*/
 	public int getDegree(){
-		/* Your code here */
-		return -1;
+		return this.degree;
 	}
 	
 	/* isNeighbour(otherVertex)
@@ -65,8 +78,10 @@ public class PixelVertex{
 	   vertex and false otherwise.
 	*/
 	public boolean isNeighbour(PixelVertex otherVertex){
-		/* Your code here */
-		return false;
+		if (this.neighbours.contains(otherVertex))
+            return true;
+        else
+            return false;
 	}
 	
 }

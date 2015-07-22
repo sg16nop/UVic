@@ -7,6 +7,8 @@
 */ 
 
 import java.awt.Color;
+import java.util.List;
+import java.util.LinkedList;
 
 public class A5Algorithms{
 
@@ -20,7 +22,25 @@ public class A5Algorithms{
 			viewer.setPixel(x,y,c);
 	*/
 	public static void FloodFillDFS(PixelVertex v, ImageViewerA5 viewer, Color fillColour){
-		/* Your code here */
+		LinkedList<PixelVertex> visited = new LinkedList<PixelVertex>();
+		// pass in an empty container for to keep track of visited vertices
+		FloodFillDFS(v,viewer,fillColour,visited);
+	}
+	
+	private static void FloodFillDFS(PixelVertex v, ImageViewerA5 viewer, Color fillColour, LinkedList<PixelVertex> visited){
+		int x = v.getX();
+		int y = v.getY();
+		int deg = v.getDegree();
+		viewer.setPixel(x,y,fillColour);
+		visited.add(v);
+		if (deg == 0)
+			return;
+		PixelVertex[] neighbours = v.getNeighbours();
+		for (int i=0; i<deg; i++){
+			PixelVertex w = neighbours[i];
+			if (!visited.contains(w))
+				FloodFillDFS(w,viewer,fillColour,visited);
+		}
 	}
 	
 	/* FloodFillBFS(v, viewer, fillColour)
@@ -33,7 +53,30 @@ public class A5Algorithms{
 			viewer.setPixel(x,y,c);
 	*/
 	public static void FloodFillBFS(PixelVertex v, ImageViewerA5 viewer, Color fillColour){
-		/* Your code here */
+		LinkedList<PixelVertex> BFSQ = new LinkedList<PixelVertex>();
+		LinkedList<PixelVertex> visited = new LinkedList<PixelVertex>();
+		viewer.setPixel(v.getX(),v.getY(),fillColour);
+		BFSQ.add(v);
+		FloodFillBFS(viewer,fillColour,visited,BFSQ);
+	}
+	
+	private static void FloodFillBFS(ImageViewerA5 viewer, Color fillColour, LinkedList<PixelVertex> visited, LinkedList<PixelVertex> BFSQueue){
+		PixelVertex v = BFSQueue.removeFirst();
+		if (visited.contains(v))
+			return;
+		int x = v.getX();
+		int y = v.getY();
+		int deg = v.getDegree();
+		viewer.setPixel(x,y,fillColour);
+		visited.add(v);
+		if (deg == 0)
+			return;
+		PixelVertex[] neighbours = v.getNeighbours();
+		for (int i=0; i<deg; i++){
+			PixelVertex w = neighbours[i];
+			BFSQueue.add(w);
+		}
+		FloodFillBFS(viewer,fillColour,visited,BFSQueue);
 	}
 	
 	/* OutlineRegionDFS(v, viewer, outlineColour)
